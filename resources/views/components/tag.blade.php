@@ -3,11 +3,15 @@
         <img src="/images/home_icon.png" alt="Home" class="nav-icon">
         <span class="nav-label">Home</span>
     </a>
-    <a href="{{ route('msg') }}" class="nav-item">
+    <a href="
+{{--{{ route('msg') }}--}}
+        " class="nav-item">
         <img src="/images/notifications_icon.png" alt="Notifications" class="nav-icon">
         <span class="nav-label">Messages</span>
     </a>
-    <a href="{{ route('profile') }}" class="nav-item">
+    <a href="
+{{--{{ route('profile') }}--}}
+        " class="nav-item">
         <img src="/images/profile_icon.png" alt="Profile" class="nav-icon">
         <span class="nav-label">Profile</span>
     </a>
