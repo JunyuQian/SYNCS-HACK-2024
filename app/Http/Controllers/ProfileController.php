@@ -28,6 +28,16 @@ class ProfileController extends Controller
     {
         $request->user()->fill($request->validated());
 
+        $request->user()->gender = $request->gender;
+        $request->user()->university = $request->university;
+        $request->user()->degree = $request->degree;
+        $request->user()->year = $request->year;
+        $request->user()->dob = $request->birthday;
+        $request->user()->skills = implode(';', $request->skills);
+        $request->user()->personal_description = $request->personal_description;
+        $request->user()->hobbies = $request->hobbies;
+        $request->user()->enrollment_type = $request->enrollment_type;
+
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
