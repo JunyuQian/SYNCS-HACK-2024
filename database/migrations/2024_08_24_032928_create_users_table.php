@@ -16,16 +16,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('name');
-            $table->string('gender');
-            $table->string('photo');
-            $table->string('university');
-            $table->string('degree');
-            $table->string('year');
-            $table->date('dob');
-            $table->string('personal_description');
-            $table->string('skills');
-            $table->string('hobbies');
-            $table->string('enrollment_type');
+            $table->string('gender')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('university')->nullable();
+            $table->string('degree')->nullable();
+            $table->string('year')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('personal_description')->nullable();
+            $table->string('skills')->nullable();
+            $table->string('hobbies')->nullable();
+            $table->string('enrollment_type')->nullable();
             $table->timestamps();
         });
     }
