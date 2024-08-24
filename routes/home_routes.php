@@ -2,6 +2,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/custom', function () {
-    return 'This is a custom route!';
-});
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
