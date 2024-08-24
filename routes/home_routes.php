@@ -19,5 +19,6 @@ Route::get('/msgDetail/{id}', [\App\Http\Controllers\MsgDetailController::class,
     ->middleware('auth');
 
 Route::post('/api/msg', [\App\Http\Controllers\MsgDetailController::class, 'store'])
-    ->name('storeMsg')
-    ->middleware('auth');
+    ->name('storeMsg');
+
+Route::get('/messages/{user1}/{user2}', [\App\Http\Controllers\MsgDetailController::class, 'getMessagesBetweenUsers']);

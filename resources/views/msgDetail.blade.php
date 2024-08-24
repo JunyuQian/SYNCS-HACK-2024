@@ -123,7 +123,6 @@
     <button>Send</button>
 </div>
 
-
 <script>
     const inputField = document.querySelector('input[type="text"]');
     const sendButton = document.querySelector('button');
@@ -139,17 +138,15 @@
             inputField.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            // 假设你有一个用户ID
-            const userId = {{ $chat_user->id }}; // 你可能需要从别的地方获取这个ID
-
             // 构建POST请求
-            fetch('http://127.0.0.1/api/msg', {
+            fetch('http://127.0.0.1:8000/api/msg', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_id: userId,
+                    send_user_id: {{ $user_id }},
+                    receive_user_id: {{ $chat_user->id }},
                     message: messageText
                 })
             })
@@ -167,6 +164,35 @@
     inputField.addEventListener('input', function() {
         sendButton.disabled = !inputField.value.trim();
     });
+
+
+    function fetchMessages() {
+        fetch(`http://127.0.0.1:8000/messages/{{ $user_id }}/{{ $chat_user->id }}`)
+            .then(response => response.json())
+            .then(messages => {
+                chatContainer.innerHTML = '';
+                messages.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    if (message.send_user_id === {{ $user_id }}) {
+                        messageElement.classList.add('sent');
+                    } else {
+                        messageElement.classList.add('received');
+                    }
+                    messageElement.textContent = message.content;
+                    chatContainer.appendChild(messageElement);
+                });
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            })
+            .catch((error) => {
+                console.error('Error fetching messages:', error);
+            });
+    }
+    fetchMessages()
+
+    // 每1秒钟获取一次消息
+    setInterval(fetchMessages, 1000);
+
 </script>
 
 

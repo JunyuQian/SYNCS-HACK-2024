@@ -20,11 +20,9 @@ class MsgDetailController extends Controller
 
     public function store(Request $request)
     {
-        // 获取当前登录用户的ID作为发送者ID
-        $sendUserId = Auth::id();
-
         // 从请求中获取接收者ID和消息内容
-        $receiveUserId = $request->input('user_id');
+        $receiveUserId = $request->input('receive_user_id');
+        $sendUserId = $request->input('send_user_id');
         $content = $request->input('message');
 
         // 创建一个新的Message实例
@@ -38,5 +36,23 @@ class MsgDetailController extends Controller
 
         // 返回成功响应或执行其他操作
         return response()->json(['status' => 'Message sent', 'message' => $message], 200);
+    }
+
+    public function getMessagesBetweenUsers($user1, $user2)
+    {
+        // 查询user1和user2之间的所有消息
+        $messages = Message::where(function($query) use ($user1, $user2) {
+            $query->where('send_user_id', $user1)
+                ->where('receive_user_id', $user2);
+        })
+            ->orWhere(function($query) use ($user1, $user2) {
+                $query->where('send_user_id', $user2)
+                    ->where('receive_user_id', $user1);
+            })
+            ->orderBy('created_at', 'asc') // 按时间顺序排序
+            ->get();
+
+        // 返回JSON响应
+        return response()->json($messages);
     }
 }
