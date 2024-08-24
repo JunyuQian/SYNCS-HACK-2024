@@ -129,8 +129,8 @@
 @else
     <ul class="message-list">
         @foreach($list as $msg)
-            <li class="message-item">
-                <img src="https://via.placeholder.com/40" alt="User {{ $msg->other_user->name }}">
+            <li class="message-item" data-url="{{ url('message/'.$msg->other_user->id) }}">
+                <img src="{{ url('images/'.$msg->other_user->photo) }}" alt="User {{ $msg->other_user->name }}">
                 <div class="message-content">
                     <p class="message-title">{{ $msg->other_user->name }}</p>
                     <p class="message-text">{{ $msg->content }}</p>
@@ -146,6 +146,17 @@
 @endif
 
 <x-tag />
+
+<script>
+    document.querySelectorAll('li').forEach(function(li) {
+        li.addEventListener('click', function() {
+            var url = this.getAttribute('data-url');
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

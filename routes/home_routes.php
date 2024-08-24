@@ -10,11 +10,11 @@ Route::post('/getNextUser', [\App\Http\Controllers\HomeController::class, 'getNe
     ->name('getNextUser')
     ->middleware('auth');
 
-Route::get('/msg', [\App\Http\Controllers\MsgController::class, 'index'])
-    ->name('msg')
+Route::get('/messages', [\App\Http\Controllers\MsgController::class, 'index'])
+    ->name('messages')
     ->middleware('auth');
 
-Route::get('/msgDetail/{id}', [\App\Http\Controllers\MsgDetailController::class, 'index'])
+Route::get('/message/{id}', [\App\Http\Controllers\MsgDetailController::class, 'index'])
     ->name('msgDetail')
     ->middleware('auth');
 
