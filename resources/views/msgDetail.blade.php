@@ -7,6 +7,7 @@
     <style>
         *{
             box-sizing: border-box;
+            font-size: 24px;
         }
         body {
             margin: 0;
@@ -23,7 +24,7 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             padding: 10px 15px;
             text-align: center;
-            font-size: 18px;
+            font-size: 28px;
             font-weight: bold;
             color: #333;
             flex-shrink: 0;
@@ -44,7 +45,7 @@
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 10px;
-            font-size: 14px;
+            font-size: 22px;
             line-height: 1.4;
             word-wrap: break-word;
             box-sizing: border-box;
@@ -76,7 +77,7 @@
             border: 1px solid #ddd;
             border-radius: 20px;
             outline: none;
-            font-size: 14px;
+            font-size: 22px;
             box-sizing: border-box;
         }
 
@@ -87,7 +88,7 @@
             border: none;
             border-radius: 20px;
             color: #fff;
-            font-size: 14px;
+            font-size: 22px;
             cursor: pointer;
             box-sizing: border-box;
             white-space: nowrap;
@@ -121,6 +122,53 @@
     <input type="text" placeholder="Type a message...">
     <button>Send</button>
 </div>
+
+
+<script>
+    const inputField = document.querySelector('input[type="text"]');
+    const sendButton = document.querySelector('button');
+    const chatContainer = document.querySelector('.chat-container');
+
+    sendButton.addEventListener('click', function() {
+        const messageText = inputField.value.trim();
+        if (messageText) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', 'sent');
+            messageElement.textContent = messageText;
+            chatContainer.appendChild(messageElement);
+            inputField.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // 假设你有一个用户ID
+            const userId = {{ $chat_user->id }}; // 你可能需要从别的地方获取这个ID
+
+            // 构建POST请求
+            fetch('http://127.0.0.1/api/msg', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: userId,
+                    message: messageText
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Message sent:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+
+
+    inputField.addEventListener('input', function() {
+        sendButton.disabled = !inputField.value.trim();
+    });
+</script>
+
 
 </body>
 </html>
