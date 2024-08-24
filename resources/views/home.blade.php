@@ -8,6 +8,8 @@
     <title>Document</title>
 </head>
 <body>
-
+<h1>home</h1>
+<!-- 使用底部导航栏组件 -->
+<x-tag />
 </body>
 </html>
