@@ -131,7 +131,7 @@
 <h1>TalentLink</h1>
 
 <div class="card-box">
-    <div class="card">
+    <div class="card" id="draggableCard">
         <div class="photo"></div>
         <div class="info">
             <p class="info-name">Tommy</p>
@@ -150,7 +150,7 @@
 </div>
 <div class="love"></div>
 <div id="cross" class=""><img src="{{ asset('svg/cross.svg') }}" alt=""></div>
-<div id="msg" class=""><img src="{{ asset('chat.svg') }}" alt=""></div>
+<div id="msg" class=""><img src="{{ asset('svg/chat.svg') }}" alt=""></div>
 <x-tag />
 
 <script>
