@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('skills')->nullable();
             $table->string('hobbies')->nullable();
             $table->string('enrollment_type')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

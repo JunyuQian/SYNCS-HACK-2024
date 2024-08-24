@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,8 @@ class MsgController extends Controller
     public function index()
     {
         $userId = Auth::id();
+
+//        $user = User::find($userId);
 
         dd($this->getMessagesList($userId));
 

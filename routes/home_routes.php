@@ -2,9 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/getNextUser', [\App\Http\Controllers\HomeController::class, 'getNextUser'])->name('getNextUser');
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home')
+    ->middleware('auth');
 
-Route::get('/msg', [\App\Http\Controllers\MsgController::class, 'index'])->name('msg');
+Route::post('/getNextUser', [\App\Http\Controllers\HomeController::class, 'getNextUser'])
+    ->name('getNextUser')
+    ->middleware('auth');
 
-Route::get('/msgDetail/{id}', [\App\Http\Controllers\MsgDetailController::class, 'index'])->name('msgDetail');
+Route::get('/msg', [\App\Http\Controllers\MsgController::class, 'index'])
+    ->name('msg')
+    ->middleware('auth');
+
+Route::get('/msgDetail/{id}', [\App\Http\Controllers\MsgDetailController::class, 'index'])
+    ->name('msgDetail')
+    ->middleware('auth');
+
+Route::post('/api/msg', [\App\Http\Controllers\MsgDetailController::class, 'store'])
+    ->name('storeMsg')
+    ->middleware('auth');
