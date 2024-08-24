@@ -1,3 +1,39 @@
+<style>
+    .tag {
+        display: inline-block;
+        padding: 5px;
+        margin: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 3px;
+    }
+    .skill-list div {
+        padding: 5px;
+        margin: 5px;
+        background-color: #f1f1f1;
+        cursor: pointer;
+    }
+    .skill-list div:hover {
+        background-color: #ddd;
+    }
+    .button-choice {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        background-color: #f0f0f0;
+        color: #333;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .button-choice.selected {
+        background-color: #4caf50;
+        color: #fff;
+        border-color: #4caf50;
+    }
+</style>
+
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -49,8 +85,96 @@
 
         <div>
             <x-input-label for="gender" :value="__('Gender')" />
-            <x-text-input id="gender" name="gender" type="text" class="mt-1 block w-full" :value="old('gender', $user->gender)" required autofocus autocomplete="gender" />
+            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" id="gender" name="gender" type="text" required="required" autofocus="autofocus" autocomplete="gender">
+                <option value="male" {{ old('gender', $user->gender) == 'male' ? 'selected' : '' }}>Male</option>
+                <option value="female" {{ old('gender', $user->gender) == 'female' ? 'selected' : '' }}>Female</option>
+                <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other</option>
+            </select>
             <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+        </div>
+
+        <div>
+            <x-input-label for="university" :value="__('University')" />
+            <x-text-input id="university" name="university" type="text" class="mt-1 block w-full" :value="old('university', $user->university)" required autofocus autocomplete="university" />
+            <x-input-error class="mt-2" :messages="$errors->get('university')" />
+        </div>
+
+        <div>
+            <x-input-label for="degree" :value="__('Degree')" />
+            <x-text-input id="degree" name="degree" type="text" class="mt-1 block w-full" :value="old('degree', $user->degree)" required autofocus autocomplete="degree" />
+            <x-input-error class="mt-2" :messages="$errors->get('degree')" />
+        </div>
+
+        <div>
+            <x-input-label for="year" :value="__('Year')" />
+            <x-text-input id="year" name="year" type="number" step="0.5" min="0.5" class="mt-1 block w-full" :value="old('year', $user->year)" required autofocus autocomplete="year" />
+            <x-input-error class="mt-2" :messages="$errors->get('year')" />
+        </div>
+
+        <!-- Skill Input and Display -->
+        <div>
+            <label for="skill_input" >输入技能:</label>
+            <input type="text" id="skill_input" onkeyup="searchSkills()">
+            <div class="skill-list" id="skill_list"></div>
+        </div>
+        <div class="selected-skills" id="selected_skills"></div>
+
+        <div>
+            <x-input-label for="birthday" :value="__('Birthday')" />
+            <x-text-input
+                id="birthday"
+                name="birthday"
+                type="date"
+                class="mt-1 block w-full"
+                :value="old('birthday', $user->dob)"
+                required
+                autofocus
+                autocomplete="bday"
+                max="{{ \Carbon\Carbon::today()->toDateString() }}"
+            />
+            <x-input-error class="mt-2" :messages="$errors->get('birthday')" />
+        </div>
+
+        <div>
+            <x-input-label for="personal description" :value="__('Personal Description')" />
+            <x-text-input id="personal description" name="personal description" type="text" class="mt-1 block w-full" :value="old('personal description', $user->personal_description)" required autofocus autocomplete="personal description" />
+            <x-input-error class="mt-2" :messages="$errors->get('personal description')" />
+        </div>
+
+        <div>
+            <x-input-label for="hobbies" :value="__('Hobbies')" />
+            <x-text-input id="hobbies" name="hobbies" type="text" class="mt-1 block w-full" :value="old('hobbies', $user->hobbies)" required autofocus autocomplete="hobbies" />
+            <x-input-error class="mt-2" :messages="$errors->get('hobbies')" />
+        </div>
+
+{{--        全日制/非全日制按钮选择--}}
+        <div class="container">
+            <div>
+                <button id="full_time" class="button-choice" data-type="full_time">Full Time</button>
+                <button id="part_time" class="button-choice" data-type="part_time">Part Time</button>
+            </div>
+        </div>
+        <script>
+            const buttons = document.querySelectorAll('.button-choice');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove 'selected' class from all buttons
+                    buttons.forEach(btn => btn.classList.remove('selected'));
+
+                    // Add 'selected' class to the clicked button
+                    this.classList.add('selected');
+                });
+            });
+        </script>
+
+        <div>
+            <x-input-label for="enrollment_type" :value="__('Enrollment Type')" />
+            <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" id="enrollment_type" name="enrollment_type" type="text" required="required" autofocus="autofocus" autocomplete="enrollment_type">
+                <option value="full-time" {{ old('enrollment_type', $user->enrollment_type) == 'full-time' ? 'selected' : '' }}>Full-Time</option>
+                <option value="part-time" {{ old('enrollment_type', $user->enrollment_type) == 'part-time' ? 'selected' : '' }}>Part-Time</option>
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('enrollment_type')" />
         </div>
 
         <div class="flex items-center gap-4">
@@ -66,5 +190,126 @@
                 >{{ __('Saved.') }}</p>
             @endif
         </div>
+
     </form>
 </section>
+
+
+<script>
+    // 示例技能池
+    const skillPool = [
+        { "id": 1, "name": "JavaScript" },
+        { "id": 2, "name": "Python" },
+        { "id": 3, "name": "Java" },
+        { "id": 4, "name": "C++" },
+        { "id": 5, "name": "Ruby" },
+        { "id": 6, "name": "Go" },
+        { "id": 7, "name": "PHP" },
+        { "id": 8, "name": "Swift" },
+        { "id": 9, "name": "Kotlin" },
+        { "id": 10, "name": "TypeScript" },
+        { "id": 11, "name": "SQL" },
+        { "id": 12, "name": "Dart" },
+        { "id": 13, "name": "Rust" },
+        { "id": 14, "name": "Scala" },
+        { "id": 15, "name": "Objective-C" },
+        { "id": 16, "name": "Perl" },
+        { "id": 17, "name": "Shell" },
+        { "id": 18, "name": "R" },
+        { "id": 19, "name": "Groovy" },
+        { "id": 20, "name": "Haskell" },
+        { "id": 21, "name": "Microsoft Word" },
+        { "id": 22, "name": "Microsoft Excel" },
+        { "id": 23, "name": "Microsoft PowerPoint" },
+        { "id": 24, "name": "Google Sheets" },
+        { "id": 25, "name": "Google Docs" },
+        { "id": 26, "name": "Photoshop" },
+        { "id": 27, "name": "Illustrator" },
+        { "id": 28, "name": "InDesign" },
+        { "id": 29, "name": "HTML" },
+        { "id": 30, "name": "CSS" },
+        { "id": 31, "name": "SEO" },
+        { "id": 32, "name": "Project Management" },
+        { "id": 33, "name": "Agile" },
+        { "id": 34, "name": "Scrum" },
+        { "id": 35, "name": "Spanish" },
+        { "id": 36, "name": "French" },
+        { "id": 37, "name": "German" },
+        { "id": 38, "name": "Chinese" },
+        { "id": 39, "name": "Japanese" },
+        { "id": 40, "name": "Russian" }
+    ];
+
+    const addedSkills = new Set();
+
+    // 基于 LIKE 匹配的简单函数
+    function like(a, b) {
+        const lowerA = a.toLowerCase();
+        const lowerB = b.toLowerCase();
+        return lowerB.includes(lowerA);
+    }
+
+
+    // 实时模糊搜索
+    function searchSkills() {
+        const input = document.getElementById('skill_input').value.toLowerCase();
+        let matches = skillPool
+            .map(skill => ({
+                ...skill,
+                matched: like(input, skill.name.toLowerCase())
+            }))
+            .filter(skill => skill.matched) // 只保留匹配的技能
+
+
+        console.log(matches)
+        matches.sort((a, b) => {
+            return a.name.length - b.name.length
+        })
+        matches = matches.slice(0, 5); // 选择前五个
+
+        displaySkills(matches);
+    }
+
+
+    // 显示匹配的技能
+    function displaySkills(skills) {
+        const list = document.getElementById('skill_list');
+        list.innerHTML = ''; // 清空之前的内容
+
+        skills.forEach(skill => {
+            const option = document.createElement('div');
+            option.textContent = skill.name;
+            option.onclick = () => addSkill(skill);
+            list.appendChild(option);
+        });
+    }
+
+    // 添加技能标签
+    function addSkill(skill) {
+        if (addedSkills.has(skill.name)) return; // 如果已经添加过，返回
+
+        addedSkills.add(skill.name);
+
+        const selectedSkillsDiv = document.getElementById('selected_skills');
+        const tag = document.createElement('span');
+        tag.className = 'tag';
+        // tag.textContent = skill.name;
+        tag.innerHTML = `${skill.name}<input type="hidden" name="skills[]" value="${skill.name}">`
+        tag.onclick = () => removeSkill(skill);
+        selectedSkillsDiv.appendChild(tag);
+    }
+
+    // 移除技能标签
+    function removeSkill(skill) {
+        addedSkills.delete(skill.name);
+
+        const selectedSkillsDiv = document.getElementById('selected_skills');
+        const tags = selectedSkillsDiv.getElementsByClassName('tag');
+        for (let i = 0; i < tags.length; i++) {
+            if (tags[i].textContent === skill.name) {
+                selectedSkillsDiv.removeChild(tags[i]);
+                break;
+            }
+        }
+    }
+</script>
