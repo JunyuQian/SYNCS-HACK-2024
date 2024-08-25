@@ -16,22 +16,6 @@
     .skill-list div:hover {
         background-color: #ddd;
     }
-    .button-choice {
-        padding: 10px 20px;
-        font-size: 16px;
-        border: 2px solid #ccc;
-        background-color: #f0f0f0;
-        color: #333;
-        cursor: pointer;
-        margin-right: 10px;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    .button-choice.selected {
-        background-color: #4caf50;
-        color: #fff;
-        border-color: #4caf50;
-    }
 </style>
 
 <section>
@@ -49,9 +33,15 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <div>
+            <x-input-label for="profile_photo" :value="__('Profile Photo')" />
+            <input id="profile_photo" name="profile_photo" type="file" class="mt-1 block w-full" />
+            <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -113,7 +103,7 @@
 
         <!-- Skill Input and Display -->
         <div>
-            <label for="skill_input" >输入技能:</label>
+            <label for="skill_input" >Your Skills:</label>
             <input type="text" id="skill_input" onkeyup="searchSkills()">
             <div class="skill-list" id="skill_list"></div>
         </div>
@@ -146,27 +136,6 @@
             <x-text-input id="hobbies" name="hobbies" type="text" class="mt-1 block w-full" :value="old('hobbies', $user->hobbies)" required autofocus autocomplete="hobbies" />
             <x-input-error class="mt-2" :messages="$errors->get('hobbies')" />
         </div>
-
-{{--        全日制/非全日制按钮选择--}}
-        <div class="container">
-            <div>
-                <button id="full_time" class="button-choice" data-type="full_time">Full Time</button>
-                <button id="part_time" class="button-choice" data-type="part_time">Part Time</button>
-            </div>
-        </div>
-        <script>
-            const buttons = document.querySelectorAll('.button-choice');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove 'selected' class from all buttons
-                    buttons.forEach(btn => btn.classList.remove('selected'));
-
-                    // Add 'selected' class to the clicked button
-                    this.classList.add('selected');
-                });
-            });
-        </script>
 
         <div>
             <x-input-label for="enrollment_type" :value="__('Enrollment Type')" />
@@ -312,4 +281,21 @@
             }
         }
     }
+
+    function loadTags() {
+        let skills = "{{ $user->skills }}"; // Retrieve the skills string from the server
+        skills = skills.trim(); // Remove any leading/trailing whitespace
+
+        if (skills) { // Check if there are any skills
+            const skillsArray = skills.split(";"); // Split the skills string into an array
+
+            skillsArray.forEach(skill => {
+                if (skill) { // Ensure skill is not an empty string
+                    addSkill({ name: skill.trim() }); // Add each skill as a tag
+                }
+            });
+        }
+    }
+    loadTags()
+
 </script>
