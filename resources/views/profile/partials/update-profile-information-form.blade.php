@@ -33,9 +33,15 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
+
+        <div>
+            <x-input-label for="profile_photo" :value="__('Profile Photo')" />
+            <input id="profile_photo" name="profile_photo" type="file" class="mt-1 block w-full" />
+            <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -97,7 +103,7 @@
 
         <!-- Skill Input and Display -->
         <div>
-            <label for="skill_input" >输入技能:</label>
+            <label for="skill_input" >Your Skills:</label>
             <input type="text" id="skill_input" onkeyup="searchSkills()">
             <div class="skill-list" id="skill_list"></div>
         </div>

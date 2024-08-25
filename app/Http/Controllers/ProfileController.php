@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -26,8 +27,14 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+//        $request->user()->fill($request->validated([
+//            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+//        ]));
+        $request->validate([
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // 2048KB = 2MB
+        ]);
 
+        $request->user()->name = $request->name;
         $request->user()->gender = $request->gender;
         $request->user()->university = $request->university;
         $request->user()->degree = $request->degree;
@@ -40,6 +47,19 @@ class ProfileController extends Controller
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
+        }
+
+        if ($request->hasFile('profile_photo')) {
+
+            $file = $request->file('profile_photo');
+            $path = $file->store('profile_photos', 'public'); // Store file in 'storage/app/public/profile_photos'
+
+            // Delete old profile photo if it exists
+            if ($request->user()->profile_photo) {
+                Storage::disk('public')->delete($request->user()->profile_photo);
+            }
+
+            $request->user()->photo = $path; // Save the new file path
         }
 
         $request->user()->save();
