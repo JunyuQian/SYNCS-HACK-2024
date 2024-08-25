@@ -131,16 +131,17 @@
 
 <div class="input-container">
     <input type="text" placeholder="Type a message...">
-    <button>Send</button>
+    <button class="btn-send">Send</button>
 </div>
 
 <script>
     const inputField = document.querySelector('input[type="text"]');
-    const sendButton = document.querySelector('button');
+    const sendButton = document.querySelector('.btn-send');
     const chatContainer = document.querySelector('.chat-container');
 
     sendButton.addEventListener('click', function() {
         const messageText = inputField.value.trim();
+        console.log(messageText);
         if (messageText) {
             const messageElement = document.createElement('div');
             messageElement.classList.add('message', 'sent');
