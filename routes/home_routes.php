@@ -22,3 +22,8 @@ Route::post('/api/msg', [\App\Http\Controllers\MsgDetailController::class, 'stor
     ->name('storeMsg');
 
 Route::get('/messages/{user1}/{user2}', [\App\Http\Controllers\MsgDetailController::class, 'getMessagesBetweenUsers']);
+
+// profile shows
+Route::get('/oprofile/{userId}', [\App\Http\Controllers\OprofileController::class, "shows"])
+    ->name('Oprofile.shows')
+    ->middleware('auth');
