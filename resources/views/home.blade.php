@@ -174,7 +174,7 @@
     $user1 = $users[0];
     $user2 = $users[1];
     @endphp
-    <div class="card" id="draggableCard">
+    <div class="card" id="draggableCard" data-id="{{ $user1['id'] }}">
         <div class="photo" style="background: url('{{ asset('images/'.$user1['photo']) }}') center / cover;"></div>
         <div class="info">
             <p class="info-name">{{$user1['name']}}</p>
@@ -186,7 +186,7 @@
             </p>
         </div>
     </div>
-    <div class="card">
+    <div class="card" data-id="{{ $user2['id'] }}">
         <div class="photo" style="background: url('{{ asset('images/'.$user2['photo']) }}') center / cover;"></div>
         <div class="info">
             <p class="info-name">{{$user2['name']}}</p>
@@ -271,6 +271,7 @@
             card.style.transition = 'transform 0.3s ease';
             card.style.transform = 'translateX(100vw)'; // 滑出屏幕右侧
             showMsg()
+            window.location.href = 'profile/' + card.dataset.id;
         } else if (moveX < -150) {
             card.style.transition = 'transform 0.3s ease';
             card.style.transform = 'translateX(-100vw)'; // 滑出屏幕左侧
@@ -310,7 +311,7 @@
                 const newCard = document.createElement('div');
                 newCard.classList.add('card');
 
-                const skillsArray = data.skills.split(' ');
+                const skillsArray = data.skills.split(';');
                 // 生成包含 <span> 标签的 HTML
                 const skillsHtml = skillsArray.map(skill => `<span>${skill}</span>`).join('');
 
@@ -321,6 +322,7 @@
             <p class="info-major">${data.major}</p>
             <p class="info-skill">${skillsHtml}</p>
             </div>`;
+                newCard.dataset.id = data.id
 
                 // 插入到.card-box容器中
                 const cardBox = document.querySelector('.card-box');

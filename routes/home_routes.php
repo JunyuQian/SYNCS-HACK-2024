@@ -22,3 +22,7 @@ Route::post('/api/msg', [\App\Http\Controllers\MsgDetailController::class, 'stor
     ->name('storeMsg');
 
 Route::get('/messages/{user1}/{user2}', [\App\Http\Controllers\MsgDetailController::class, 'getMessagesBetweenUsers']);
+
+Route::get('/profile/{id}', [\App\Http\Controllers\HomeController::class, 'othersProfile']);
+
+

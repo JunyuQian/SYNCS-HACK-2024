@@ -81,4 +81,10 @@ class HomeController extends Controller
             return response()->json(['message' => 'No user found'], 404);
         }
     }
+
+    public function othersProfile($id)
+    {
+        $user = User::find($id);
+        return view('othersProfile', ['user' => $user]);
+    }
 }
