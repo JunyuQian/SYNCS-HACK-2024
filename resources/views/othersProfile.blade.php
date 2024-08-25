@@ -7,6 +7,32 @@
         color: #fff;
         border-radius: 3px;
     }
+    .styled-button {
+        background-color: #007BFF; /* 按钮背景颜色 */
+        color: white; /* 按钮文字颜色 */
+        border: none; /* 去掉边框 */
+        border-radius: 5px; /* 圆角 */
+        padding: 10px 20px; /* 内边距 */
+        font-size: 28px; /* 字体大小 */
+        font-weight: bold; /* 字体加粗 */
+        cursor: pointer; /* 鼠标悬停时显示手型光标 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* 过渡效果 */
+        width: 80%;
+        margin-left: 10%;
+        height: 80px;
+    }
+
+    .styled-button:hover {
+        background-color: #0056b3; /* 悬停时背景颜色 */
+        transform: translateY(-2px); /* 悬停时上移效果 */
+    }
+
+    .styled-button:active {
+        background-color: #003d80; /* 点击时背景颜色 */
+        transform: translateY(0); /* 点击时还原位置 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 点击时阴影缩小 */
+    }
 </style>
 
 <section>
@@ -86,6 +112,8 @@
         </div>
 
     </div>
+
+    <a href="{{ url("./message/".$user->id) }}"><button class="styled-button">Message</button></a>
 </section>
 
 <script>

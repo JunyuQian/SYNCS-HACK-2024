@@ -42,8 +42,8 @@ class UserSeeder extends Seeder
                 'year' => $faker->year,
                 'dob' => $faker->date(),
                 'personal_description' => $faker->sentence,
-                'skills' => $faker->words(3, true), // 三个技能词语
-                'hobbies' => $faker->words(3, true), // 三个爱好词语
+                'skills' => implode(';', $faker->words(3)),
+                'hobbies' => implode(';', $faker->words(3)),
                 'enrollment_type' => $faker->randomElement(['Full-time', 'Part-time']),
                 'remember_token' => null,
                 'created_at' => now(),

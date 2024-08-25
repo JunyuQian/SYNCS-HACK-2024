@@ -180,7 +180,7 @@
             <p class="info-name">{{$user1['name']}}</p>
             <p class="info-major">{{$user1['degree']}}</p>
             <p class="info-skill">
-                @foreach(explode(' ', $user1['skills']) as $skill)
+                @foreach(explode(';', $user1['skills']) as $skill)
                     <span>{{ $skill }}</span>
                 @endforeach
             </p>
@@ -192,7 +192,7 @@
             <p class="info-name">{{$user2['name']}}</p>
             <p class="info-major">{{$user2['degree']}}</p>
             <p class="info-skill">
-                @foreach(explode(' ', $user2['skills']) as $skill)
+                @foreach(explode(';', $user2['skills']) as $skill)
                     <span>{{ $skill }}</span>
                 @endforeach
             </p>
