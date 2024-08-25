@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
-        *{
+        * {
             box-sizing: border-box;
             font-size: 24px;
         }
@@ -29,6 +32,19 @@
             color: #333;
             flex-shrink: 0;
             width: 100%;
+            position: relative; /* 使返回按钮定位生效 */
+        }
+
+        .back-button {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            border: none;
+            color: #007BFF;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         .chat-container {
@@ -102,27 +118,21 @@
 <body>
 
 <div class="header">
-    Chat with User
+    <!-- 返回按钮使用 Font Awesome 图标 -->
+    <button class="back-button" onclick="window.history.back();">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+    {{ $chat_user->name }}
 </div>
 
 <div class="chat-container">
-    <div class="message received">
-        Hi, how are you?
-    </div>
-    <div class="message sent">
-        I'm good, thank you! How about you?
-    </div>
-    <div class="message received">
-        I'm doing well. Thanks for asking.
-    </div>
-    <!-- 更多的消息 -->
+    <!-- Chat messages will be loaded here -->
 </div>
 
 <div class="input-container">
     <input type="text" placeholder="Type a message...">
     <button>Send</button>
 </div>
-
 
 <script>
     const inputField = document.querySelector('input[type="text"]');
@@ -139,17 +149,15 @@
             inputField.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            // 假设你有一个用户ID
-            const userId = {{ $chat_user->id }}; // 你可能需要从别的地方获取这个ID
-
             // 构建POST请求
-            fetch('http://127.0.0.1/api/msg', {
+            fetch('http://127.0.0.1:8000/api/msg', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_id: userId,
+                    send_user_id: {{ $user_id }},
+                    receive_user_id: {{ $chat_user->id }},
                     message: messageText
                 })
             })
@@ -163,12 +171,38 @@
         }
     });
 
-
     inputField.addEventListener('input', function() {
         sendButton.disabled = !inputField.value.trim();
     });
-</script>
 
+    function fetchMessages() {
+        fetch(`http://127.0.0.1:8000/messages/{{ $user_id }}/{{ $chat_user->id }}`)
+            .then(response => response.json())
+            .then(messages => {
+                chatContainer.innerHTML = '';
+                messages.forEach(message => {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    if (message.send_user_id === {{ $user_id }}) {
+                        messageElement.classList.add('sent');
+                    } else {
+                        messageElement.classList.add('received');
+                    }
+                    messageElement.textContent = message.content;
+                    chatContainer.appendChild(messageElement);
+                });
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            })
+            .catch((error) => {
+                console.error('Error fetching messages:', error);
+            });
+    }
+    fetchMessages();
+
+    // 每1秒钟获取一次消息
+    setInterval(fetchMessages, 1000);
+
+</script>
 
 </body>
 </html>

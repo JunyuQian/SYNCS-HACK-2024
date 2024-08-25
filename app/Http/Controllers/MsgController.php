@@ -14,28 +14,44 @@ class MsgController extends Controller
     {
         $userId = Auth::id();
 
-//        $user = User::find($userId);
+        $list = $this->getMessagesList($userId);
 
-        dd($this->getMessagesList($userId));
-
-        return view('msg');
+        return view('msg', ['list' => $list]);
     }
+
+//    public function getMessagesList($userId)
+//    {
+//        return Message::with(['sender', 'receiver'])
+//            ->where(function ($query) use ($userId) {
+//                $query->where('send_user_id', $userId)
+//                    ->orWhere('receive_user_id', $userId);
+//            })
+//            ->orderBy('created_at', 'desc')
+//            ->get()
+//            ->map(function ($message) use ($userId) {
+//                // 判断当前用户是发送者还是接收者，并设置对方用户
+//                if ($message->send_user_id == $userId) {
+//                    $message->other_user = $message->receiver;
+//                } else {
+//                    $message->other_user = $message->sender;
+//                }
+//                return $message;
+//            });
+//    }
 
     public function getMessagesList($userId)
     {
-        $subQuery = Message::select(DB::raw('GREATEST(send_user_id, receive_user_id) as user_key, MAX(id) as latest_message_id'))
-            ->where(function ($query) use ($userId) {
-                $query->where('send_user_id', $userId)
-                    ->orWhere('receive_user_id', $userId);
-            })
-            ->groupBy('user_key');
-
-        $latestMessages = Message::joinSub($subQuery, 'latest_messages', function ($join) {
-            $join->on('messages.id', '=', 'latest_messages.latest_message_id');
-        })
-            ->orderBy('messages.created_at', 'desc')
-            ->get();
-
-        return $latestMessages;
+        // 子查询：获取每个对话的最后一条消息的ID
+        $lastMessageIds = Message::select(DB::raw('MAX(id) as id'))->where(function ($query) use ($userId) {
+            $query->where('send_user_id', $userId)->orWhere('receive_user_id', $userId);
+        })->groupBy(DB::raw('LEAST(send_user_id, receive_user_id), GREATEST(send_user_id, receive_user_id)'))->pluck('id'); // 主查询：获取最后一条消息的详细信息
+        return Message::with(['sender', 'receiver'])->whereIn('id', $lastMessageIds)->get()->map(function ($message) use ($userId) { // 判断当前用户是发送者还是接收者，并设置对方用户
+            if ($message->send_user_id == $userId) {
+                $message->other_user = $message->receiver;
+            } else {
+                $message->other_user = $message->sender;
+            }
+            return $message;
+        });
     }
 }
