@@ -52,4 +52,7 @@
     a.active{
         color: orangered
     }
+    .nav-item svg{
+        display: inline-block; !important;
+    }
 </style>

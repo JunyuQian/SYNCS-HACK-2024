@@ -103,8 +103,8 @@
 
         <!-- Skill Input and Display -->
         <div>
-            <label for="skill_input" >Your Skills:</label>
-            <input type="text" id="skill_input" onkeyup="searchSkills()">
+            <label for="skill_input" class="mt-1 block w-full">Your Skills:</label>
+            <input type="text" id="skill_input" class="mt-1 block w-full" onkeyup="searchSkills()">
             <div class="skill-list" id="skill_list"></div>
         </div>
         <div class="selected-skills" id="selected_skills"></div>
@@ -162,7 +162,7 @@
 
     </form>
 </section>
-
+<x-tag/>
 
 <script>
     // 示例技能池
