@@ -87,6 +87,7 @@
             pointer-events: none;
             width: 200px;
             height: 200px;
+            line-height: 225px;
             text-align: center;
             box-sizing: border-box;
             z-index: 999;
