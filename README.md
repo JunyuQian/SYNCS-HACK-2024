@@ -47,7 +47,6 @@ Make sure you have Node.js and npm installed. If not, you can download them from
 
 ```bash
 npm install
-composer install
 ```
 
 4. Set up the environment file:
