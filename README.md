@@ -2,29 +2,17 @@
 
 ## Introduction
 
-### Demo Video
 
-[Watch the demo video here](https://youtu.be/WQFrLbOPRTQ)
 
-### Screenshots
-
-<div style="display: flex; justify-content: space-between; width: 100%">
-    <div style="flex: 1; margin-right: 10px;">
-        <img src="./public/images/home_page.jpg" alt="Home Page" style="width: 100%; max-width: 300px;">
-        <p style="text-align: center;">Home Page</p>
-    </div>
-    <div style="flex: 1; margin-right: 10px;">
-        <img src="./public/images/profile_page.jpg" alt="Profile View" style="width: 100%; max-width: 300px;">
-        <p style="text-align: center;">Profile View</p>
-    </div>
-    <div style="flex: 1;">
-        <img src="./public/images/list_page.png" alt="Chat List" style="width: 100%; max-width: 300px;">
-        <p style="text-align: center;">Chat List</p>
-    </div>
-</div>
+| <img src="./public/images/home_page.jpg" width="200"/> | <img src="./public/images/profile_page.jpg" width="200"/> | <img src="./public/images/list_page.png" width="200"/> |
+|:------------------------------------------------------:|:---------------------------------------------------------:|:------------------------------------------------------:|
+| Home Page                                              | Profile View                                               | Chat List                                              |
 
 TalentLink is a social app that connects students by displaying key profile details like school and skills, helping them find and collaborate with peers. This project was built using the Laravel PHP framework and includes a real-time chat feature with a focus on academic collaboration.
 
+### Demo Video
+
+[Watch the demo video here](https://youtu.be/WQFrLbOPRTQ)
 
 ## Features
 - Student Profiles: View profiles including school, major, skills, and internship experience.
