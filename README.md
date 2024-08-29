@@ -1,15 +1,11 @@
 # TalentLink
 
-## Introduction
-
-
-
-| <img src="./public/images/home_page.jpg" width="200"/> | <img src="./public/images/profile_page.jpg" width="200"/> | <img src="./public/images/list_page.png" width="200"/> |
-|:------------------------------------------------------:|:---------------------------------------------------------:|:------------------------------------------------------:|
-| Home Page                                              | Profile View                                               | Chat List                                              |
-
 TalentLink is a social app that connects students by displaying key profile details like school and skills, helping them find and collaborate with peers. This project was built using the Laravel PHP framework and includes a real-time chat feature with a focus on academic collaboration.
 
+
+| <img src="./public/images/home_page.jpg" width="200"/> | <img style="margin: 0 20px" src="./public/images/profile_page.jpg" width="200"/> | <img style="margin: 0 20px" src="./public/images/list_page.png" width="200"/> |
+|:------------------------------------------------------:|:---------------------------------------------------------:|:------------------------------------------------------:|
+| Home Page                                              | Profile View                                               | Chat List                                              |
 ### Demo Video
 
 [Watch the demo video here](https://youtu.be/WQFrLbOPRTQ)
