@@ -1,66 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TalentLink
+TalentLink is a social app that connects students by displaying key profile details like school and skills, helping them find and collaborate with peers. This project was built using the Laravel PHP framework and includes a real-time chat feature with a focus on academic collaboration.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Features
+- Student Profiles: View profiles including school, major, skills, and internship experience.
+- Matching Algorithm: Connect with peers based on shared interests and skills.
+- Real-Time Chat: Engage in real-time communication through our native chat feature using long polling.
+- Swipe Interface: Intuitive swipe functionality to browse and connect with potential collaborators.
 
-## About Laravel
+## Built With
+- Blade - Laravel's templating engine
+- CSS - Styling for the application
+- ES6 - Modern JavaScript syntax
+- HTML5 - Structuring the web pages
+- JavaScript - Enhancing interactivity
+- Laravel - PHP framework for backend development
+- MySQL - Database management
+- PHP - Core language for the backend
+- REST - API architecture for the backend
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation and Setup
+To run the project locally, follow these steps:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/talentlink.git
+cd talentlink
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. Install PHP dependencies:
+Make sure you have Composer installed. If not, you can install it from getcomposer.org.
+```bash
+composer install
+```
 
-## Learning Laravel
+3. Install Node.js dependencies:
+Make sure you have Node.js and npm installed. If not, you can download them from nodejs.org.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+npm install
+composer install
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. Set up the environment file:
+Copy the .env.example file to .env and update the environment variables to match your local setup:
+```bash
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. Generate the application key:
+This is essential for Laravel to encrypt data properly.
+```bash
+php artisan key:generate
+```
 
-## Laravel Sponsors
+6. Run the database migrations:
+Ensure your MySQL database is set up and the credentials are correct in your .env file.
+```bash
+php artisan migrate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7. Execute the seeders:
+Seeders populate your database with initial data. Run the following command to execute the seeders:
+```bash
+php artisan db:seed --class=UserSeeder
+```
 
-### Premium Partners
+8. Start the local development server:
+You can now start the Laravel development server:
+```bash
+php artisan serve
+```
+The application will be accessible at http://localhost:8000.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Usage
+After setting up, you can register as a user, create a profile, and start browsing other profiles. The matching algorithm will suggest peers with complementary skills, and you can initiate a chat with them to discuss collaboration opportunities.
 
-## Contributing
+## Future Development
+We plan to improve the matching algorithm by including additional data points, integrate project management tools, and collaborate with universities to incorporate TalentLink into their systems.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
